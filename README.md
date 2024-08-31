@@ -1,5 +1,7 @@
 # React + TypeScript + Vite
 
+![vercel](https://vercelbadge.vercel.app/api/kaitakabe0301/yumemi-frontend)
+
 ## Storybookについて
 
 Storybookをlocalで立ち上げるには、以下のコマンドを実行して下さい。
