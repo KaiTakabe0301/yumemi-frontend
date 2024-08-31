@@ -8,6 +8,15 @@
 - アプリ (https://yumemi-frontend-rho.vercel.app/)
 - Storybook (https://yumemi-frontend-storybook.vercel.app/)
 
+## 開発方法
+
+本アプリは、RESASのAPIをコールするためのプロキシサーバとして、Vercel Functions を利用しています。
+そのため、ローカル環境ではVercel CLIを使用して、以下のコマンドでアプリを立ち上げて下さい。
+
+```bash
+vercel dev
+```
+
 ## Storybookについて
 
 Storybookをlocalで立ち上げるには、以下のコマンドを実行して下さい。
