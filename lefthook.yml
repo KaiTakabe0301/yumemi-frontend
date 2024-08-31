@@ -21,3 +21,16 @@ pre-commit:
     lint:
       glob: '*.{ts,tsx}'
       run: npm run lint {staged_files}
+
+pre-push:
+  parallel: true
+  commands:
+    compiled:
+      glob: '*.{ts,tsx}'
+      run: npx tsc
+    format:
+      glob: '*.{ts,tsx}'
+      run: npm run format:check {push_files}
+    lint:
+      glob: '*.{ts,tsx}'
+      run: npm run lint {push_files}
