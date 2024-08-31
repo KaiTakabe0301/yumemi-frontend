@@ -1,0 +1,53 @@
+name: CI
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - 'src/**'
+      - '.github/workflows/ci.yml'
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node
+        uses: ./.github/actions/setup-node
+
+      - name: Compile
+        run: npx tsc
+
+  static:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node
+        uses: ./.github/actions/setup-node
+
+      - name: Format Check
+        run: npm run format:check:all
+
+      - name: Lint
+        run: npm run lint:all
+
+  unit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node
+        uses: ./.github/actions/setup-node
+
+      - name: Unit Test with Coverage
+        run: npx vitest run --coverage
+
+      - uses: codecov/codecov-action@v4
+        name: Upload results to Codecov
+        with:
+          fail_ci_if_error: true # optional (default = false)
+          files: ./coverage/coverage-final.json
+          token: ${{ secrets.CODECOV_TOKEN }}

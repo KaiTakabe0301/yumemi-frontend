@@ -1,0 +1,36 @@
+name: Install Packages
+description: Install Node.js packages
+
+inputs:
+  node-version:
+    description: 'The Node.js version to use'
+    required: true
+    default: '20'
+  working-directory:
+    description: 'The working directory to run the package installation'
+    required: false
+    default: '.'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Setup Node
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ inputs.node-version }}
+        cache: 'npm'
+      id: setup_node
+
+    - name: Cache NPM Dependencies
+      id: cache-npm
+      uses: actions/cache@v4
+      with:
+        path: |
+          ${{ inputs.working-directory }}/node_modules
+        key: ${{ runner.os }}-npm-${{ hashFiles(format('{0}/package-lock.json', inputs.working-directory)) }}
+
+    - name: Install Packages
+      if: steps.cache-npm.outputs.cache-hit != 'true'
+      shell: bash
+      run: |
+        npm ci

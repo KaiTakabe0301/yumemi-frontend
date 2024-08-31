@@ -1,6 +1,7 @@
 # React + TypeScript + Vite
 
 ![vercel](https://vercelbadge.vercel.app/api/kaitakabe0301/yumemi-frontend)
+[![codecov](https://codecov.io/gh/KaiTakabe0301/yumemi-frontend/graph/badge.svg?token=hRMitW3LlV)](https://codecov.io/gh/KaiTakabe0301/yumemi-frontend)
 
 ## 成果物
 
