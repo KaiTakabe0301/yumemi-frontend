@@ -2,11 +2,13 @@ import { HttpHandler } from 'msw';
 
 import populationCompositionPerYearHandler from './api/resas/population/composition/perYear';
 import prefecturesHandler from './api/resas/prefectures';
+import testHandler from './api/test';
 
 // 有効化するハンドラを、keyで指定できるように、オブジェクトで管理
 export const handlerObjects = {
   '/api/resas/population/composition/perYear': populationCompositionPerYearHandler,
   '/api/resas/prefectures': prefecturesHandler,
+  'api/test': testHandler,
 };
 
 // storybook/vitestで、全てのhandlerを有効化したいので、配列に変換してexport

@@ -5,6 +5,7 @@ const exclude = [...configDefaults.exclude, 'api/*', 'public/*', '.storybook/*']
 export default defineConfig({
   test: {
     globals: true,
+    environment: 'happy-dom',
     exclude,
     coverage: {
       exclude,
