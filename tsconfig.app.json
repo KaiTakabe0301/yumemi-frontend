@@ -18,7 +18,10 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+
+    // globalでvitestを使うための設定
+    "types": ["vitest/globals"]
   },
   "include": ["src"]
 }
