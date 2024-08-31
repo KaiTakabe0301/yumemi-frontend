@@ -1,6 +1,7 @@
 import { http, HttpResponse } from 'msw';
 
 const handlers = [
+  // fetcher の挙動を確認するためのハンドラ
   http.get('*/api/test', ({ request }) => {
     const url = new URL(request.url);
     const error = url.searchParams.get('error');

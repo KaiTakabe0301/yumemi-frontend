@@ -1,4 +1,4 @@
-describe('/api/test', () => {
+describe('mock api ... /api/test の挙動確認', () => {
   test('should work', async () => {
     const response = await fetch('http://localhost/api/test');
     const data = await response.json();

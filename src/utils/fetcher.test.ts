@@ -3,7 +3,7 @@ import useSWR from 'swr';
 
 import { fetcher } from './fetcher';
 
-describe('fetcherの挙動確認', () => {
+describe('SWRで利用されるfetcherの挙動確認', () => {
   const url = '/api/test';
   test('should return data from the API', async () => {
     const { result } = renderHook(() => useSWR(url, fetcher));
