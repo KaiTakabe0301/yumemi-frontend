@@ -1,5 +1,14 @@
 # React + TypeScript + Vite
 
+## Lefthookについて
+本プロジェクトでは、Lefthookを導入しています。
+commit-msg/pre-commit/pre-pushのタイミングで、主に以下の内容を確認しています。
+- フォーマットが違反していないか
+- commitのメッセージがconventional-commitに準拠しているか
+- テストが通るか
+
+詳細は`lefthook.yml`を確認して下さい。
+
 ## mockについて
 
 mockには、MSWを利用している。

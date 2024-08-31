@@ -1,0 +1,36 @@
+# EXAMPLE USAGE:
+#
+#   Refer for explanation to following link:
+#   https://github.com/evilmartians/lefthook/blob/master/docs/configuration.md
+#
+# EXAMPLE USAGE:
+#
+#   Refer for explanation to following link:
+#   https://github.com/evilmartians/lefthook/blob/master/docs/configuration.md
+commit-msg:
+  commands:
+    commitlint:
+      run: npx commitlint --edit
+
+pre-commit:
+  parallel: true
+  commands:
+    format:
+      glob: '*.{ts,tsx}'
+      run: npm run format:check {staged_files}
+    lint:
+      glob: '*.{ts,tsx}'
+      run: npm run lint {staged_files}
+
+pre-push:
+  parallel: true
+  commands:
+    compiled:
+      glob: '*.{ts,tsx}'
+      run: npx tsc
+    format:
+      glob: '*.{ts,tsx}'
+      run: npm run format:check {push_files}
+    lint:
+      glob: '*.{ts,tsx}'
+      run: npm run lint {push_files}
