@@ -1,8 +1,20 @@
 # React + TypeScript + Vite
 
+## Storybookについて
+
+Storybookをlocalで立ち上げるには、以下のコマンドを実行して下さい。
+
+```bash
+npm run storybook
+```
+
+正常に立ち上がったあとは、`http://localhost:6006`にアクセスすることで、各コンポーネントが確認できます。
+
 ## Lefthookについて
+
 本プロジェクトでは、Lefthookを導入しています。
 commit-msg/pre-commit/pre-pushのタイミングで、主に以下の内容を確認しています。
+
 - フォーマットが違反していないか
 - commitのメッセージがconventional-commitに準拠しているか
 - テストが通るか
