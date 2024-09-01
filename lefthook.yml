@@ -35,5 +35,4 @@ pre-push:
       glob: '*.{ts,tsx}'
       run: npm run lint {push_files}
     test:
-      glob: '*.{ts,tsx}'
-      run: npm test -- --run {push_files}
+      run: npm test -- --run
