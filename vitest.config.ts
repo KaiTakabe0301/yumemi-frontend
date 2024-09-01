@@ -11,7 +11,11 @@ export default defineConfig({
     environment: 'happy-dom',
     exclude,
     coverage: {
-      exclude,
+      exclude: [
+        ...exclude,
+        './src/components/parts/**/*.stories.tsx',
+        './src/components/**/index.ts',
+      ],
     },
     setupFiles: ['./vitest.setup.ts'],
   },
