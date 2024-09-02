@@ -1,48 +1,5 @@
-import { css } from '@emotion/react';
 import { Check } from 'lucide-react';
 import { forwardRef } from 'react';
-
-const checkboxStyle = {
-  wrapper: css({
-    display: 'flex',
-    alignItems: 'center',
-    gap: '8px',
-    cursor: 'pointer',
-    '&:hover': {
-      opacity: 0.8,
-    },
-    '&:active': {
-      opacity: 0.6,
-    },
-  }),
-
-  checkbox: css({
-    width: '16px',
-    height: '16px',
-    flexShrink: 0,
-    margin: 0,
-    cursor: 'pointer',
-    userSelect: 'none',
-  }),
-
-  indicator: css({
-    display: 'inline-flex',
-    width: '100%',
-    height: '100%',
-    background: 'transparent',
-    border: '1px solid #000',
-    borderRadius: '4px',
-    transition: 'background-color 0.3s',
-
-    '[data-state="checked"] &': {
-      backgroundColor: '#000', // チェック時の背景色を黒に
-    },
-  }),
-
-  label: css({
-    cursor: 'pointer',
-  }),
-};
 
 type CheckboxElement = React.ElementRef<'button'>;
 type PrimitiveButtonProps = React.ComponentPropsWithoutRef<'button'>;
@@ -55,10 +12,10 @@ interface CheckboxProps extends PrimitiveButtonProps {
 const Checkbox = forwardRef<CheckboxElement, CheckboxProps>(
   ({ checked, id, required, onCheckedChange = () => undefined, label, ...props }, ref) => {
     return (
-      <div css={[checkboxStyle.wrapper]}>
+      <div className='flex gap-2 cursor-pointer items-center hover:opacity-80 active:opacity-60'>
         <button
           {...props}
-          css={[checkboxStyle.checkbox]}
+          className='w-4 h-4 flex-shrink-0 m-0 cursor-pointer user-select-none'
           type='button'
           role='checkbox'
           aria-checked={checked}
@@ -68,11 +25,13 @@ const Checkbox = forwardRef<CheckboxElement, CheckboxProps>(
           id={id}
           onClick={onCheckedChange}
         >
-          <span css={[checkboxStyle.indicator]}>
+          <span
+            className={`inline-flex w-full h-full border border-solid border-black rounded duration-300 ${checked ? 'bg-black' : 'bg-transparent'} `}
+          >
             <Check color='white' size='16px' />
           </span>
         </button>
-        <label css={[checkboxStyle.label]} htmlFor={id}>
+        <label className='cursor-pointer' htmlFor={id}>
           {label}
         </label>
       </div>

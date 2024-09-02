@@ -29,10 +29,10 @@ pre-push:
       glob: '*.{ts,tsx}'
       run: npx tsc
     format:
-      glob: '*.{ts,tsx}'
+      glob: '*.{ts,tsx,js,yml,md,json}'
       run: npm run format:check {push_files}
     lint:
-      glob: '*.{ts,tsx}'
+      glob: '*.{ts,tsx,js}'
       run: npm run lint {push_files}
     test:
       run: npm test -- --run
