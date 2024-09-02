@@ -11,7 +11,7 @@
     "format:fix": "prettier --write",
     "format:check:all": "npm run format:check .",
     "format:fix:all": "npm run format:fix .",
-    "lint": "eslint --max-warnings=0",
+    "lint": "eslint --max-warnings=0 --no-warn-ignored",
     "lint:fix": "eslint --fix",
     "lint:all": "npm run lint .",
     "lint:fix:all": "npm run lint:fix .",
