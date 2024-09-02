@@ -10,6 +10,7 @@ export default defineConfig({
     globals: true,
     environment: 'happy-dom',
     exclude,
+    css: true,
     coverage: {
       exclude: [
         ...exclude,
