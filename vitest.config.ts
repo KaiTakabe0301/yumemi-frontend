@@ -8,6 +8,10 @@ const exclude = [
   'public/*',
   '.storybook/*',
   '**/*.config.{js,ts}',
+  '**/*.stories.tsx',
+  // Container and Presenterは、play function でテストするため対象から外す
+  '**/container.tsx',
+  '**/presenter.tsx',
 ];
 
 export default defineConfig({
@@ -18,11 +22,7 @@ export default defineConfig({
     exclude,
     css: true,
     coverage: {
-      exclude: [
-        ...exclude,
-        './src/components/parts/**/*.stories.tsx',
-        './src/components/**/index.ts',
-      ],
+      exclude: [...exclude, './src/components/**/index.ts'],
     },
     setupFiles: ['./vitest.setup.ts'],
   },
