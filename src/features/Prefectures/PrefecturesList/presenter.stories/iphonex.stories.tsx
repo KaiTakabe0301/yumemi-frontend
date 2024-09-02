@@ -22,10 +22,8 @@ export const IphoneX: Story = {
       defaultViewport: 'iphonex',
     },
   },
+  // previewだと、異なるviewportから遷移してくると、テストが失敗する。その場合は再度実行して下さい。
   play: async ({ canvasElement, step }) => {
-    // viewportの変更を待つ
-    await new Promise((resolve) => setTimeout(resolve, 100));
-
     const canvas = within(canvasElement);
 
     await step('Check grid layout on iPhone X', async () => {
