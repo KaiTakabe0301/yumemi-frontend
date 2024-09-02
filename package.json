@@ -21,10 +21,12 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
+    "clsx": "^2.1.1",
     "destyle.css": "^4.0.1",
     "lucide-react": "^0.438.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-router-dom": "^6.26.1",
     "swr": "^2.2.5",
     "tailwind-variants": "^0.2.1"
   },
@@ -63,6 +65,7 @@
     "postcss": "^8.4.43",
     "prettier": "3.3.3",
     "storybook": "^8.2.9",
+    "storybook-addon-remix-react-router": "^3.0.0",
     "tailwindcss": "^3.4.10",
     "typescript": "^5.5.3",
     "typescript-eslint": "^8.0.1",
