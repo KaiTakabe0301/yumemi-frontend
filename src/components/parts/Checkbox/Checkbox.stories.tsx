@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { fn } from '@storybook/test';
 import { useState } from 'react';
 
 import { Checkbox } from './Checkbox';
@@ -21,8 +22,8 @@ export const Default: Story = {
         type: 'boolean',
       },
     },
-    onCheckedChange: {
-      action: 'onCheckedChange',
+    onClick: {
+      action: 'onClick',
     },
     label: {
       control: {
@@ -32,8 +33,9 @@ export const Default: Story = {
   },
   args: {
     label: 'label',
+    id: 'id',
     checked: false,
-    onCheckedChange: () => undefined,
+    onClick: fn(),
   },
 };
 
@@ -46,7 +48,7 @@ export const Controlled = () => {
         id={'sample'}
         label={'label'}
         checked={checked}
-        onCheckedChange={() => setChecked((prev) => !prev)}
+        onClick={() => setChecked((prev) => !prev)}
       />
     </>
   );
