@@ -5,7 +5,7 @@ const DEFAULT_VIEWPORT_SIZE = { width: 1280, height: 720 };
 
 const config: TestRunnerConfig = {
   tags: {
-    include: ['test-only'],
+    include: ['testable'],
     exclude: ['no-tests', 'parts'],
     skip: ['skip-test'],
   },
