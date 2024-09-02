@@ -26,7 +26,7 @@ const Checkbox = forwardRef<CheckboxElement, CheckboxProps>(
           onClick={onCheckedChange}
         >
           <span
-            className={`inline-flex w-full h-full bg-transparent border border-solid border-black rounded duration-300 ${checked ? 'bg-slate-950' : 'bg-transparent'} `}
+            className={`inline-flex w-full h-full border border-solid border-black rounded duration-300 ${checked ? 'bg-black' : 'bg-transparent'} `}
           >
             <Check color='white' size='16px' />
           </span>
