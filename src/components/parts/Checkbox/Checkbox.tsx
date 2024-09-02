@@ -7,10 +7,10 @@ interface CheckboxProps extends PrimitiveButtonProps {
   checked?: boolean;
   label: React.ReactNode;
   required?: boolean;
-  onCheckedChange: React.MouseEventHandler<HTMLButtonElement>;
+  onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 const Checkbox = forwardRef<CheckboxElement, CheckboxProps>(
-  ({ checked, id, required, onCheckedChange = () => undefined, label, ...props }, ref) => {
+  ({ checked, id, required, onClick = () => undefined, label, ...props }, ref) => {
     return (
       <div className='flex gap-2 cursor-pointer items-center hover:opacity-80 active:opacity-60'>
         <button
@@ -23,7 +23,7 @@ const Checkbox = forwardRef<CheckboxElement, CheckboxProps>(
           data-state={checked ? 'checked' : 'unchecked'}
           ref={ref}
           id={id}
-          onClick={onCheckedChange}
+          onClick={onClick}
         >
           <span
             className={`inline-flex w-full h-full border border-solid border-black rounded duration-300 ${checked ? 'bg-black' : 'bg-transparent'} `}

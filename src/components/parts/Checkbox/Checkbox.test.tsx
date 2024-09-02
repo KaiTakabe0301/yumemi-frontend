@@ -12,7 +12,7 @@ describe('Checkbox Component', () => {
   });
 
   test('renders correctly with the provided label', () => {
-    render(<Checkbox label='Test Label' onCheckedChange={handleChange} />);
+    render(<Checkbox label='Test Label' onClick={handleChange} />);
 
     const label = screen.getByText('Test Label');
     expect(label).toBeVisible();
@@ -27,7 +27,7 @@ describe('Checkbox Component', () => {
         <Checkbox
           label='Test Label'
           checked={isChecked}
-          onCheckedChange={() => {
+          onClick={() => {
             setIsChecked(!isChecked);
             handleChange();
           }}
@@ -47,14 +47,14 @@ describe('Checkbox Component', () => {
   });
 
   test('is checked when the checked prop is true', () => {
-    render(<Checkbox label='Test Label' checked={true} onCheckedChange={handleChange} />);
+    render(<Checkbox label='Test Label' checked={true} onClick={handleChange} />);
 
     const checkbox = screen.getByRole('checkbox');
     expect(checkbox).toBeChecked();
   });
 
   test('is disabled when the disabled prop is true', () => {
-    render(<Checkbox label='Test Label' disabled={true} onCheckedChange={handleChange} />);
+    render(<Checkbox label='Test Label' disabled={true} onClick={handleChange} />);
 
     const checkbox = screen.getByRole('checkbox');
     expect(checkbox).toBeDisabled();
