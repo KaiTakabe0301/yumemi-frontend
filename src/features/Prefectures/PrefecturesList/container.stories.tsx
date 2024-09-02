@@ -4,7 +4,7 @@ import { expect, waitFor, within } from '@storybook/test';
 import { PrefectureList } from './container';
 
 const meta = {
-  title: 'PrefectureList',
+  title: 'PrefectureList/Container',
   component: PrefectureList,
   parameters: {
     layout: 'centered',
@@ -15,7 +15,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  tags: ['test-only'],
+  tags: ['testable'],
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
 
