@@ -23,6 +23,9 @@ export const IphoneX: Story = {
     },
   },
   play: async ({ canvasElement, step }) => {
+    // viewportの変更を待つ
+    await new Promise((resolve) => setTimeout(resolve, 100));
+
     const canvas = within(canvasElement);
 
     await step('Check grid layout on iPhone X', async () => {
@@ -33,7 +36,7 @@ export const IphoneX: Story = {
         (item) => item.getBoundingClientRect().top === firstRowY,
       ).length;
 
-      expect(columnsInFirstRow).toBe(2);
+      expect(columnsInFirstRow).toBe(2); // iPhone Xの表示では3カラムで表示されることを確認
     });
   },
 };

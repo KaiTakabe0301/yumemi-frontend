@@ -23,6 +23,9 @@ export const Default: Story = {
     },
   },
   play: async ({ canvasElement, step }) => {
+    // viewportの変更を待つ
+    await new Promise((resolve) => setTimeout(resolve, 100));
+
     const canvas = within(canvasElement);
 
     await step('Check grid layout on Tablet', async () => {
