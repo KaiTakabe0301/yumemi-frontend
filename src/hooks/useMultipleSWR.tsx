@@ -37,6 +37,6 @@ const multipleFetcher = async (urls: string[]) => {
  * @param urls URLの配列
  * @returns SWRのデータ
  */
-export function useMultipleSWR([...urls]: string[], options?: SWRConfiguration) {
-  return useSWR(urls, multipleFetcher, options);
+export function useMultipleSWR<T>([...urls]: string[], options?: SWRConfiguration) {
+  return useSWR<T[]>(urls, multipleFetcher, options);
 }
