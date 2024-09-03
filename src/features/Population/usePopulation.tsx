@@ -1,13 +1,16 @@
 import { useSearchParams } from 'react-router-dom';
 
 import { useMultipleSWR } from '../../hooks/useMultipleSWR';
+import { isPrefCode } from '../Prefectures';
 import { useFetchPrefectures } from '../Prefectures/useFetchPrefectures';
 import { PopulationPresenterProps } from './presenter';
 import { PopulationCompositionPerYear } from './type';
 
 export function usePopulation() {
   const [searchParams, _setSearchParams] = useSearchParams();
-  const selectedPrefCode = searchParams.getAll('prefCode');
+
+  // URLパラメータから都道府県コードを取得(都道府県コード以外のパラメータは無視)
+  const selectedPrefCode = searchParams.getAll('prefCode').filter(isPrefCode);
 
   // 選択された都道府県のデータを取得
   const { data: prefectures } = useFetchPrefectures();
