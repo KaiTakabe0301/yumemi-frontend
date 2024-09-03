@@ -26,6 +26,9 @@ export function usePopulation() {
     selectedPrefCode.map(
       (prefCode) => `/api/resas/population/composition/perYear?cityCode=-&prefCode=${prefCode}`,
     ),
+    {
+      suspense: true,
+    },
   );
 
   /**
