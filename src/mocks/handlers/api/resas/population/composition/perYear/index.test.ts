@@ -14,7 +14,7 @@ describe('mock api ... /api/resas/population/composition/perYear の挙動確認
     const data = await response.json();
     expect(data).toEqual({
       message: null,
-      result: mockPopulationCompositionPerYear,
+      result: mockPopulationCompositionPerYear[1],
     });
   });
 });
