@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import { useMultipleSWR } from '../../hooks/useMultipleSWR';
@@ -7,7 +8,7 @@ import { PopulationPresenterProps } from './presenter';
 import { PopulationCompositionPerYear } from './type';
 
 export function usePopulation() {
-  const [searchParams, _setSearchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   // URLパラメータから都道府県コードを取得(都道府県コード以外のパラメータは無視)
   const selectedPrefCode = searchParams.getAll('prefCode').filter(isPrefCode);
@@ -18,11 +19,19 @@ export function usePopulation() {
     selectedPrefCode.includes(prefecture.prefCode.toString()),
   );
 
-  // これは後でtabから取得するように変更する
-  const selectedLabel = '総人口';
+  const labels = useMemo(() => ['総人口', '年少人口', '生産年齢人口', '老年人口'], []);
+  // クエリパラメータの 'label' が有効な値でなければデフォルト値として '総人口' を選択
+  const selectedLabel = labels.includes(searchParams.get('label') ?? '')
+    ? searchParams.get('label')
+    : '総人口';
+  const handleLabelChange = (label: string) => {
+    const newSearchParams = new URLSearchParams(searchParams.toString());
+    newSearchParams.set('label', label);
+    setSearchParams(newSearchParams);
+  };
 
   // 選択された都道府県の人口データを取得
-  const { data } = useMultipleSWR(
+  const { data } = useMultipleSWR<{ message: null; result: PopulationCompositionPerYear }>(
     selectedPrefCode.map(
       (prefCode) => `/api/resas/population/composition/perYear?cityCode=-&prefCode=${prefCode}`,
     ),
@@ -69,5 +78,5 @@ export function usePopulation() {
     return transformedData;
   };
 
-  return { data: transformedDataForGraph(data), selectedPrefectures };
+  return { data: transformedDataForGraph(data), selectedPrefectures, labels, handleLabelChange };
 }

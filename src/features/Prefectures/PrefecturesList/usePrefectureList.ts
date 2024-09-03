@@ -17,8 +17,10 @@ export function usePrefectureList() {
       } else {
         updatedPrefCodes = [...currentPrefCodes, prefCodeString];
       }
-
-      setSearchParams({ prefCode: updatedPrefCodes });
+      const newSearchParams = new URLSearchParams(searchParams.toString());
+      newSearchParams.delete('prefCode');
+      updatedPrefCodes.forEach((code) => newSearchParams.append('prefCode', code));
+      setSearchParams(newSearchParams);
     },
     [searchParams, setSearchParams],
   );
