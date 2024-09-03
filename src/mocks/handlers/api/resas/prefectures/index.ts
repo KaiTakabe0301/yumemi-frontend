@@ -1,5 +1,5 @@
 // src/mocks/handlers.js
-import { http, HttpResponse } from 'msw';
+import { delay, http, HttpResponse } from 'msw';
 
 export const mockPrefectures = [
   {
@@ -193,7 +193,15 @@ export const mockPrefectures = [
 ];
 
 const handlers = [
-  http.get('*/api/resas/prefectures', () => {
+  http.get('*/api/resas/prefectures', async ({ request }) => {
+    const url = new URL(request.url);
+
+    // MSWのモックサーバーでtimeoutパラメーターを指定することで、リクエストの遅延をシミュレートできます
+    const timeout = url.searchParams.get('timeout');
+    if (timeout) {
+      await delay(Number(timeout));
+    }
+
     return HttpResponse.json({
       message: null,
       result: mockPrefectures,
