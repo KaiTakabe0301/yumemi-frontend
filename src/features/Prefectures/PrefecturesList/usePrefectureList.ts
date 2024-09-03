@@ -1,12 +1,7 @@
 import { useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import useSWR from 'swr';
-
-import { fetcher } from '../../../utils/fetcher';
 
 export function usePrefectureList() {
-  const { data, error, isLoading } = useSWR('/api/resas/prefectures?timeout=1000', fetcher);
-
   const [searchParams, setSearchParams] = useSearchParams();
 
   const handlePrefectureClick = useCallback(
@@ -33,5 +28,5 @@ export function usePrefectureList() {
     [searchParams],
   );
 
-  return { handlePrefectureClick, isChecked, data, error, isLoading };
+  return { handlePrefectureClick, isChecked };
 }
