@@ -38,5 +38,5 @@ const multipleFetcher = async (urls: string[]) => {
  * @returns SWRのデータ
  */
 export function useMultipleSWR([...urls]: string[]) {
-  return useSWR(urls, multipleFetcher);
+  return useSWR(urls, multipleFetcher, { suspense: true });
 }
