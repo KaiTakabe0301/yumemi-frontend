@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { expect, within } from '@storybook/test';
+import { expect, waitFor, within } from '@storybook/test';
 
 import { mockPrefectures } from '../../../../mocks/handlers/api/resas/prefectures';
 import { PrefectureListPresenter } from '../presenter';
@@ -22,7 +22,6 @@ export const IphoneX: Story = {
       defaultViewport: 'iphonex',
     },
   },
-  // previewだと、異なるviewportから遷移してくると、テストが失敗する。その場合は再度実行して下さい。
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
 
@@ -34,7 +33,13 @@ export const IphoneX: Story = {
         (item) => item.getBoundingClientRect().top === firstRowY,
       ).length;
 
-      expect(columnsInFirstRow).toBe(2); // iPhone Xの表示では3カラムで表示されることを確認
+      // 異なるviewportから遷移してくると、画面の描画が完了していない場合があるため、waitForを使用して待つ
+      await waitFor(
+        () => {
+          expect(columnsInFirstRow).toBe(2); // iPhone Xの表示では3カラムで表示されることを確認
+        },
+        { timeout: 5000 },
+      );
     });
   },
 };
