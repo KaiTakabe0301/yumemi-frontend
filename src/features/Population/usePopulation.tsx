@@ -1,7 +1,8 @@
+import { useSuspenseQueries } from '@tanstack/react-query';
 import { useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
-import { useMultipleSWR } from '../../hooks/useMultipleSWR';
+import { fetcher } from '../../utils/fetcher';
 import { isPrefCode } from '../Prefectures';
 import { useFetchPrefectures } from '../Prefectures/useFetchPrefectures';
 import { PopulationPresenterProps } from './presenter';
@@ -30,15 +31,13 @@ export function usePopulation() {
     setSearchParams(newSearchParams);
   };
 
-  // 選択された都道府県の人口データを取得
-  const { data } = useMultipleSWR<{ message: null; result: PopulationCompositionPerYear }>(
-    selectedPrefCode.map(
-      (prefCode) => `/api/resas/population/composition/perYear?cityCode=-&prefCode=${prefCode}`,
-    ),
-    {
-      suspense: true,
-    },
-  );
+  const results = useSuspenseQueries({
+    queries: selectedPrefCode.map((prefCode) => ({
+      queryKey: [`/api/resas/population/composition/perYear?prefCode=${prefCode}&cityCode=-`],
+      queryFn: () =>
+        fetcher(`/api/resas/population/composition/perYear?prefCode=${prefCode}&cityCode=-`),
+    })),
+  });
 
   /**
    * TODO: refactor 都道府県によって、保持しているyearに差異があるとエラーになる
@@ -51,7 +50,7 @@ export function usePopulation() {
   const transformedDataForGraph = (
     data: { message: null; result: PopulationCompositionPerYear }[] | undefined,
   ): PopulationPresenterProps['data'] => {
-    if (!data) return [];
+    if (!data || data.length === 0) return [];
 
     const transformedData: PopulationPresenterProps['data'] = [];
 
@@ -78,5 +77,10 @@ export function usePopulation() {
     return transformedData;
   };
 
-  return { data: transformedDataForGraph(data), selectedPrefectures, labels, handleLabelChange };
+  return {
+    data: transformedDataForGraph(results.map((r) => r.data)),
+    selectedPrefectures,
+    labels,
+    handleLabelChange,
+  };
 }
