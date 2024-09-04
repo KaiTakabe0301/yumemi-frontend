@@ -17,7 +17,7 @@ export const Default: Story = {
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
 
-    await step('Check Initial Visibility of CheckBoxes', async () => {
+    await step('チェックボックスが描画されることを確認', async () => {
       await waitFor(
         () => {
           expect(canvas.getByLabelText('北海道')).toBeVisible();
@@ -29,22 +29,22 @@ export const Default: Story = {
       );
     });
 
-    await step('Select CheckBox', async () => {
+    await step('北海道と青森県のチェックボックスを選択', async () => {
       await canvas.getByLabelText('北海道').click();
       await canvas.getByLabelText('青森県').click();
     });
 
-    await step('Verify CheckBoxes Are Selected', async () => {
+    await step('選択したチェックボックスが選択されていることを確認', async () => {
       await expect(canvas.getByLabelText('北海道')).toBeChecked();
       await expect(canvas.getByLabelText('青森県')).toBeChecked();
     });
 
-    await step('Deselect CheckBoxes', async () => {
+    await step('北海道と青森県のチェックボックスから選択を外す', async () => {
       await canvas.getByLabelText('北海道').click();
       await canvas.getByLabelText('青森県').click();
     });
 
-    await step('Verify CheckBoxes Are Deselected', async () => {
+    await step('チェックボックスが選択されていないことを確認', async () => {
       await expect(canvas.getByLabelText('北海道')).not.toBeChecked();
       await expect(canvas.getByLabelText('青森県')).not.toBeChecked();
     });

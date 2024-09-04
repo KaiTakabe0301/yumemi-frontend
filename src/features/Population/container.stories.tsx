@@ -61,7 +61,7 @@ export const Default: Story = {
     // Comboboxを取得
     const comboboxInput = canvas.getByRole('combobox');
 
-    await step('Select option from Combobox', async () => {
+    await step('グラフに描画される内容として年少人口を選択', async () => {
       await userEvent.selectOptions(comboboxInput, '年少人口');
     });
 
@@ -85,8 +85,7 @@ export const Default: Story = {
       },
     );
 
-    // SVGが変更されるのを待ってから確認
-    await step('Check if SVG is updated for 年少人口', async () => {
+    await step('グラフの内容が年少人口へと切り替わっていることを確認', async () => {
       const svgElement = await canvasElement.querySelector('svg');
       const svgPath = svgElement?.querySelector('path[name=北海道]');
       await waitFor(
@@ -100,7 +99,7 @@ export const Default: Story = {
     });
 
     // オプションを選択
-    await step('Select option from Combobox', async () => {
+    await step('グラフに描画される内容として生産年齢人口を選択', async () => {
       await userEvent.selectOptions(comboboxInput, '生産年齢人口');
     });
 
@@ -125,7 +124,7 @@ export const Default: Story = {
     );
 
     // SVGが変更されるのを待ってから確認
-    await step('Check if SVG is updated for 生産年齢人口', async () => {
+    await step('グラフの内容が生産年齢人口へと切り替わっていることを確認', async () => {
       const svgElement = await canvasElement.querySelector('svg');
       const svgPath = svgElement?.querySelector('path[name=北海道]');
       await waitFor(
@@ -138,7 +137,7 @@ export const Default: Story = {
       prevSvgPath = svgPath;
     });
 
-    await step('Select option from Combobox', async () => {
+    await step('グラフに描画される内容として老年人口を選択', async () => {
       await userEvent.selectOptions(comboboxInput, '老年人口');
     });
 
@@ -163,7 +162,7 @@ export const Default: Story = {
     );
 
     // // SVGが変更されるのを待ってから確認
-    await step('Check if SVG is updated for 老年人口', async () => {
+    await step('グラフの内容が老年人口へと切り替わっていることを確認', async () => {
       const svgElement = await canvasElement.querySelector('svg');
       const svgPath = svgElement?.querySelector('path[name=北海道]');
       await waitFor(

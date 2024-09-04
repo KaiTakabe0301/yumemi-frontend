@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { expect, within } from '@storybook/test';
+import { expect, waitFor, within } from '@storybook/test';
 
 import { mockPrefectures } from '../../../../mocks/handlers/api/resas/prefectures';
 import { PrefectureListPresenter } from '../presenter';
@@ -22,11 +22,10 @@ export const Default: Story = {
       defaultViewport: 'tablet',
     },
   },
-  // previewだと、異なるviewportから遷移してくると、テストが失敗する。その場合は再度実行して下さい。
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
 
-    await step('Check grid layout on Tablet', async () => {
+    await step('Tabletで表示した場合、選択肢がカラムで表示されていることを確認', async () => {
       const listItems = await canvas.findAllByRole('checkbox');
       const firstRowY = listItems[0].getBoundingClientRect().top;
 
@@ -34,7 +33,13 @@ export const Default: Story = {
         (item) => item.getBoundingClientRect().top === firstRowY,
       ).length;
 
-      expect(columnsInFirstRow).toBe(4);
+      // 異なるviewportから遷移してくると、画面の描画が完了していない場合があるため、waitForを使用して待つ
+      await waitFor(
+        () => {
+          expect(columnsInFirstRow).toBe(4);
+        },
+        { timeout: 5000 },
+      );
     });
   },
 };
