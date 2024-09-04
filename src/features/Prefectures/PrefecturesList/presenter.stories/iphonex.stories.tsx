@@ -25,7 +25,7 @@ export const IphoneX: Story = {
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
 
-    await step('Check grid layout on iPhone X', async () => {
+    await step('iphoneXで表示した場合、選択肢が2カラムで表示されていることを確認', async () => {
       const listItems = await canvas.findAllByRole('checkbox');
       const firstRowY = listItems[0].getBoundingClientRect().top;
 
@@ -36,7 +36,7 @@ export const IphoneX: Story = {
       // 異なるviewportから遷移してくると、画面の描画が完了していない場合があるため、waitForを使用して待つ
       await waitFor(
         () => {
-          expect(columnsInFirstRow).toBe(2); // iPhone Xの表示では3カラムで表示されることを確認
+          expect(columnsInFirstRow).toBe(2);
         },
         { timeout: 5000 },
       );

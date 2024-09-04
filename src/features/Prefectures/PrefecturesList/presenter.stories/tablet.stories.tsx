@@ -25,7 +25,7 @@ export const Default: Story = {
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
 
-    await step('Check grid layout on Tablet', async () => {
+    await step('Tabletで表示した場合、選択肢がカラムで表示されていることを確認', async () => {
       const listItems = await canvas.findAllByRole('checkbox');
       const firstRowY = listItems[0].getBoundingClientRect().top;
 
