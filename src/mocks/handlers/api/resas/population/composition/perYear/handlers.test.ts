@@ -1,4 +1,4 @@
-import { mockPopulationCompositionPerYear } from '.';
+import { mockPopulationCompositionPerYear } from './handlers';
 
 describe('mock api ... /api/resas/population/composition/perYear の挙動確認', () => {
   test('should work', async () => {
