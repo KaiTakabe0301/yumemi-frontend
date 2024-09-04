@@ -6,9 +6,7 @@ import { PrefectureList } from './container';
 const meta = {
   title: 'PrefectureList/Container',
   component: PrefectureList,
-  parameters: {
-    layout: 'centered',
-  },
+  parameters: {},
   tags: ['autodocs'],
 } satisfies Meta<typeof PrefectureList>;
 export default meta;

@@ -1,4 +1,4 @@
-import useSWR from 'swr';
+import useSWR, { SWRConfiguration } from 'swr';
 
 const multipleFetcher = async (urls: string[]) => {
   const responses = await Promise.all(urls.map((url) => fetch(url)));
@@ -37,6 +37,6 @@ const multipleFetcher = async (urls: string[]) => {
  * @param urls URLの配列
  * @returns SWRのデータ
  */
-export function useMultipleSWR([...urls]: string[]) {
-  return useSWR(urls, multipleFetcher);
+export function useMultipleSWR<T>([...urls]: string[], options?: SWRConfiguration) {
+  return useSWR<T[]>(urls, multipleFetcher, options);
 }
