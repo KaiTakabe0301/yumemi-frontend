@@ -65,6 +65,26 @@ export const Default: Story = {
       await userEvent.selectOptions(comboboxInput, '年少人口');
     });
 
+    await step(
+      'labelを年少人口に切り替えても、選択済みの都道府県が描画されていることを確認',
+      async () => {
+        await waitFor(
+          async () => {
+            await expect(
+              canvasElement.querySelector('svg')?.querySelector('path[name=北海道]'),
+            ).toBeVisible();
+            await expect(
+              canvasElement.querySelector('svg')?.querySelector('path[name=青森県]'),
+            ).toBeVisible();
+            await expect(
+              canvasElement.querySelector('svg')?.querySelector('path[name=埼玉県]'),
+            ).toBeVisible();
+          },
+          { timeout: 5000 },
+        );
+      },
+    );
+
     // SVGが変更されるのを待ってから確認
     await step('Check if SVG is updated for 年少人口', async () => {
       const svgElement = await canvasElement.querySelector('svg');
@@ -84,6 +104,26 @@ export const Default: Story = {
       await userEvent.selectOptions(comboboxInput, '生産年齢人口');
     });
 
+    await step(
+      'labelを生産年齢人口に切り替えても、選択済みの都道府県が描画されていることを確認',
+      async () => {
+        await waitFor(
+          async () => {
+            await expect(
+              canvasElement.querySelector('svg')?.querySelector('path[name=北海道]'),
+            ).toBeVisible();
+            await expect(
+              canvasElement.querySelector('svg')?.querySelector('path[name=青森県]'),
+            ).toBeVisible();
+            await expect(
+              canvasElement.querySelector('svg')?.querySelector('path[name=埼玉県]'),
+            ).toBeVisible();
+          },
+          { timeout: 5000 },
+        );
+      },
+    );
+
     // SVGが変更されるのを待ってから確認
     await step('Check if SVG is updated for 生産年齢人口', async () => {
       const svgElement = await canvasElement.querySelector('svg');
@@ -101,6 +141,26 @@ export const Default: Story = {
     await step('Select option from Combobox', async () => {
       await userEvent.selectOptions(comboboxInput, '老年人口');
     });
+
+    await step(
+      'labelを老年人口に切り替えても、選択済みの都道府県が描画されていることを確認',
+      async () => {
+        await waitFor(
+          async () => {
+            await expect(
+              canvasElement.querySelector('svg')?.querySelector('path[name=北海道]'),
+            ).toBeVisible();
+            await expect(
+              canvasElement.querySelector('svg')?.querySelector('path[name=青森県]'),
+            ).toBeVisible();
+            await expect(
+              canvasElement.querySelector('svg')?.querySelector('path[name=埼玉県]'),
+            ).toBeVisible();
+          },
+          { timeout: 5000 },
+        );
+      },
+    );
 
     // // SVGが変更されるのを待ってから確認
     await step('Check if SVG is updated for 老年人口', async () => {
