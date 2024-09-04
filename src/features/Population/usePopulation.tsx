@@ -1,5 +1,5 @@
 import { useSuspenseQueries, UseSuspenseQueryResult } from '@tanstack/react-query';
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import { fetcher } from '../../utils/fetcher';
@@ -16,20 +16,30 @@ export function usePopulation() {
 
   // 選択された都道府県のデータを取得
   const { data: prefectures } = useFetchPrefectures();
-  const selectedPrefectures = prefectures?.filter((prefecture) =>
-    selectedPrefCode.includes(prefecture.prefCode.toString()),
+  const selectedPrefectures = useMemo(
+    () =>
+      prefectures?.filter((prefecture) =>
+        selectedPrefCode.includes(prefecture.prefCode.toString()),
+      ),
+    [prefectures, selectedPrefCode],
   );
 
   const labels = useMemo(() => ['総人口', '年少人口', '生産年齢人口', '老年人口'], []);
+
   // クエリパラメータの 'label' が有効な値でなければデフォルト値として '総人口' を選択
-  const selectedLabel = labels.includes(searchParams.get('label') ?? '')
-    ? searchParams.get('label')
-    : '総人口';
-  const handleLabelChange = (label: string) => {
-    const newSearchParams = new URLSearchParams(searchParams.toString());
-    newSearchParams.set('label', label);
-    setSearchParams(newSearchParams);
-  };
+  const selectedLabel = useMemo(
+    () => (labels.includes(searchParams.get('label') ?? '') ? searchParams.get('label') : '総人口'),
+    [labels, searchParams],
+  );
+
+  const handleLabelChange = useCallback(
+    (label: string) => {
+      const newSearchParams = new URLSearchParams(searchParams.toString());
+      newSearchParams.set('label', label);
+      setSearchParams(newSearchParams);
+    },
+    [searchParams, setSearchParams],
+  );
 
   const results: UseSuspenseQueryResult<{
     populationCompositionPerYear: PopulationCompositionPerYear['data'];
@@ -54,36 +64,39 @@ export function usePopulation() {
    * }[]
    * の形式に変換する
    */
-  const transformedDataForGraph = (
-    data: {
-      prefCode: number;
-      populationCompositionPerYear: PopulationCompositionPerYear['data'];
-    }[],
-  ): PopulationPresenterProps['data'] => {
-    const populationPerYear: PopulationPresenterProps['data'] = [];
+  const transformedDataForGraph = useCallback(
+    (
+      data: {
+        prefCode: number;
+        populationCompositionPerYear: PopulationCompositionPerYear['data'];
+      }[],
+    ): PopulationPresenterProps['data'] => {
+      const populationPerYear: PopulationPresenterProps['data'] = [];
 
-    data.forEach(({ prefCode, populationCompositionPerYear }) => {
-      populationCompositionPerYear.forEach(({ data, label }) => {
-        if (label !== selectedLabel) return;
+      data.forEach(({ prefCode, populationCompositionPerYear }) => {
+        populationCompositionPerYear.forEach(({ data, label }) => {
+          if (label !== selectedLabel) return;
 
-        data.forEach(({ year, value }) => {
-          const target = populationPerYear.find((item) => item.year === year);
-          if (target) {
-            target.populationPerPrefecture[prefCode] = value;
-          } else {
-            populationPerYear.push({
-              year,
-              populationPerPrefecture: {
-                [prefCode]: value,
-              },
-            });
-          }
+          data.forEach(({ year, value }) => {
+            const target = populationPerYear.find((item) => item.year === year);
+            if (target) {
+              target.populationPerPrefecture[prefCode] = value;
+            } else {
+              populationPerYear.push({
+                year,
+                populationPerPrefecture: {
+                  [prefCode]: value,
+                },
+              });
+            }
+          });
         });
       });
-    });
 
-    return populationPerYear;
-  };
+      return populationPerYear;
+    },
+    [selectedLabel],
+  );
 
   return {
     data: transformedDataForGraph(results.map(({ data }) => data)),
