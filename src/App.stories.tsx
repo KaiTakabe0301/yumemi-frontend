@@ -2,10 +2,12 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { expect, waitFor, within } from '@storybook/test';
 
 import App from './App';
+import { RootLayout } from './components/layout/RootLayout/RootLayout';
 
 const meta = {
   title: 'App',
   component: App,
+  decorators: [(story) => <RootLayout>{story()}</RootLayout>],
   parameters: {},
   tags: ['autodocs'],
 } satisfies Meta<typeof App>;

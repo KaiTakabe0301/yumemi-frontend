@@ -5,12 +5,17 @@ import { createRoot } from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import App from './App';
+import { RootLayout } from './components/layout/RootLayout/RootLayout';
 import ErrorPage from './ErrorPage';
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <App />,
+    element: (
+      <RootLayout>
+        <App />
+      </RootLayout>
+    ),
     errorElement: <ErrorPage />,
   },
 ]);
