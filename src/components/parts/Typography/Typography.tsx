@@ -1,6 +1,8 @@
 import { PropsWithChildren } from 'react';
 import { tv } from 'tailwind-variants';
 
+import { cn } from '../../../utils/cn';
+
 export type Variants = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'large' | 'normal' | 'small';
 
 const typography = tv({
@@ -25,9 +27,10 @@ const typography = tv({
 
 type TypographyProps = {
   variant: Variants;
+  className?: string;
 } & PropsWithChildren;
 
-export function Typography({ variant, children }: TypographyProps) {
+export function Typography({ variant, children, className }: TypographyProps) {
   const Comp = variant !== 'large' && variant !== 'normal' && variant !== 'small' ? variant : 'p';
-  return <Comp className={typography({ variant })}>{children}</Comp>;
+  return <Comp className={cn(typography({ variant }), className)}>{children}</Comp>;
 }
