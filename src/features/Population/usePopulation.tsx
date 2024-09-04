@@ -1,4 +1,4 @@
-import { useSuspenseQueries } from '@tanstack/react-query';
+import { useSuspenseQueries, UseSuspenseQueryResult } from '@tanstack/react-query';
 import { useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
@@ -31,16 +31,23 @@ export function usePopulation() {
     setSearchParams(newSearchParams);
   };
 
-  const results = useSuspenseQueries({
+  const results: UseSuspenseQueryResult<{
+    populationCompositionPerYear: PopulationCompositionPerYear['data'];
+    prefCode: number;
+  }>[] = useSuspenseQueries({
     queries: selectedPrefCode.map((prefCode) => ({
       queryKey: [`/api/resas/population/composition/perYear?prefCode=${prefCode}&cityCode=-`],
       queryFn: () =>
-        fetcher(`/api/resas/population/composition/perYear?prefCode=${prefCode}&cityCode=-`),
+        fetcher(`/api/resas/population/composition/perYear?prefCode=${prefCode}&cityCode=-`).then(
+          ({ result }) => ({
+            prefCode,
+            populationCompositionPerYear: result.data,
+          }),
+        ),
     })),
   });
 
   /**
-   * TODO: refactor 都道府県によって、保持しているyearに差異があるとエラーになる
    * {
    *   year: number;
    *   populationPerPrefecture: Record<string, number>;
@@ -48,37 +55,38 @@ export function usePopulation() {
    * の形式に変換する
    */
   const transformedDataForGraph = (
-    data: { message: null; result: PopulationCompositionPerYear }[] | undefined,
+    data: {
+      prefCode: number;
+      populationCompositionPerYear: PopulationCompositionPerYear['data'];
+    }[],
   ): PopulationPresenterProps['data'] => {
-    if (!data || data.length === 0) return [];
+    const populationPerYear: PopulationPresenterProps['data'] = [];
 
-    const transformedData: PopulationPresenterProps['data'] = [];
+    data.forEach(({ prefCode, populationCompositionPerYear }) => {
+      populationCompositionPerYear.forEach(({ data, label }) => {
+        if (label !== selectedLabel) return;
 
-    // 横軸を年度とするので、年度のリストを取得
-    const years = data[0].result.data[0].data.map((d) => d.year);
-
-    years.forEach((year) => {
-      const populationPerYear: { year: number; populationPerPrefecture: Record<string, number> } = {
-        year,
-        populationPerPrefecture: {},
-      };
-
-      selectedPrefCode.forEach((prefCode, i) => {
-        const populationPerLabel = data[i].result.data.filter((d) => d.label === selectedLabel)[0];
-
-        populationPerYear.populationPerPrefecture[prefCode] = populationPerLabel.data.filter(
-          (d) => d.year === year,
-        )[0].value;
+        data.forEach(({ year, value }) => {
+          const target = populationPerYear.find((item) => item.year === year);
+          if (target) {
+            target.populationPerPrefecture[prefCode] = value;
+          } else {
+            populationPerYear.push({
+              year,
+              populationPerPrefecture: {
+                [prefCode]: value,
+              },
+            });
+          }
+        });
       });
-
-      transformedData.push(populationPerYear);
     });
 
-    return transformedData;
+    return populationPerYear;
   };
 
   return {
-    data: transformedDataForGraph(results.map((r) => r.data)),
+    data: transformedDataForGraph(results.map(({ data }) => data)),
     selectedPrefectures,
     labels,
     handleLabelChange,

@@ -1,4 +1,4 @@
-type PopulationDataPerYear = {
+export type PopulationDataPerYear = {
   year: number;
   value: number;
   rate: number;
