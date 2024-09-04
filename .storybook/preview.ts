@@ -6,6 +6,7 @@ import { initialize, mswLoader } from 'msw-storybook-addon';
 import { withRouter } from 'storybook-addon-remix-react-router';
 
 import { handlers } from '../src/mocks/handlers';
+import { withStateProvider } from './decorator';
 
 initialize({}, handlers);
 
@@ -26,7 +27,7 @@ const preview: Preview = {
     },
   },
   loaders: [mswLoader],
-  decorators: [withRouter],
+  decorators: [withRouter, withStateProvider],
 };
 
 export default preview;
