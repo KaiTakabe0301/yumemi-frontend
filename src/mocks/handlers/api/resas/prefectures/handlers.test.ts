@@ -1,4 +1,4 @@
-import { mockPrefectures } from '.';
+import { mockPrefectures } from './handlers';
 
 describe('mock api ... /api/resas/prefectures', () => {
   test('should work', async () => {
