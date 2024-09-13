@@ -4,8 +4,8 @@ description: Install Node.js packages
 inputs:
   node-version:
     description: 'The Node.js version to use'
-    required: true
-    default: '20'
+    required: false
+    default: '20.17.0'
   working-directory:
     description: 'The working directory to run the package installation'
     required: false
@@ -15,11 +15,12 @@ runs:
   using: 'composite'
   steps:
     - name: Setup Node
+      id: setup-node
       uses: actions/setup-node@v4
       with:
         node-version: ${{ inputs.node-version }}
         cache: 'npm'
-      id: setup_node
+        cache-dependency-path: ${{ inputs.working-directory }}/package-lock.json
 
     - name: Cache NPM Dependencies
       id: cache-npm
@@ -34,3 +35,4 @@ runs:
       shell: bash
       run: |
         npm ci
+      working-directory: ${{ inputs.working-directory }}
