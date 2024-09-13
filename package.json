@@ -19,7 +19,8 @@
     "coverage": "vitest run --coverage",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "test-storybook": "test-storybook"
+    "test-storybook": "test-storybook",
+    "textlint": "textlint ./**/*.md"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.54.1",
@@ -71,6 +72,10 @@
     "storybook": "^8.2.9",
     "storybook-addon-remix-react-router": "^3.0.0",
     "tailwindcss": "^3.4.10",
+    "textlint": "^14.2.0",
+    "textlint-filter-rule-allowlist": "^4.0.0",
+    "textlint-filter-rule-comments": "^1.2.2",
+    "textlint-rule-preset-ja-technical-writing": "^10.0.1",
     "typescript": "^5.5.3",
     "typescript-eslint": "^8.0.1",
     "vite": "^5.4.1",
