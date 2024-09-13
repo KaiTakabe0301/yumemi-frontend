@@ -105,14 +105,14 @@ mockには、MSWを利用しています。
 ### 7-1. handlersのディレクトリ構成について
 
 MSWのhandlersは、`src/mocks/handlers/api/resas/**/`に定義しています。<br>
-`**/`のディレクトリ構成は、RESASのAPIのパスと同じ構成となっています。
+`**/`のディレクトリ構成は、RESASのAPIのパスと同じ構成になっています。
 
 ### 7-2. mockの有効化について
 
 storybook、vitestでは、全てのmockが有効化されます。<br>
 
 localでは、`.env`で指定したhandlerのみが有効化できるようになっています。<br>
-以下のように、`VITE_ENABLE_MSW_ENDPOINT`に設定したkeyに対応するhandlerが有効化されます。<br>
+以下のように、`VITE_ENABLE_MSW_ENDPOINT`に設定したkeyと対になるhandlerが有効化されます。<br>
 複数のmockを有効化したい場合は、半角スペース区切りでkeyを記載して下さい。
 keyは、`src/mocks/handlers/index.ts`に定義されている`handlerObjects`を参照して下さい。<br>
 
