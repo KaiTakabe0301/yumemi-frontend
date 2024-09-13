@@ -20,7 +20,7 @@ export function PrefectureListPresenter({
         {prefectures
           ? prefectures.map((prefecture) => (
               <ol
-                className='flex justify-center cursor-pointer select-none hover:opacity-80 active:opacity-60'
+                className='flex justify-center cursor-pointer select-none hover:opacity-80 active:opacity-60 sm:justify-start'
                 key={prefecture.prefCode}
               >
                 <Checkbox
